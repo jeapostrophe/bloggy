@@ -1,0 +1,95 @@
+div.header {
+    font-size: 140%;
+    margin-bottom: 1em;
+}
+
+div.header span#blog_title {
+    font-weight: bold;
+    margin-right: 1em;
+}
+div.header span#blog_title a {
+    color: black;
+    text-decoration: none;
+}
+div.header span#blog_title a:hover {
+    text-decoration: underline;
+}
+div.header span#blog_subtitle {
+    font-style: italic;
+}
+
+div.content {}
+
+div.content span#content_title {
+    font-size: 120%;
+    text-align: center;
+}
+
+div.content ul {}
+div.content ul li {}
+div.content ul li a {}
+
+div.post {
+    border-top: dashed 1px;
+    padding-top: 0.5em;
+}
+
+div.post span.title {
+    font-weight: bold;
+}
+div.post span.title a {
+    color: black;
+    text-decoration: none;
+}
+div.post span.title a:hover {
+    text-decoration: underline;
+}
+
+div.post span.date {
+    margin-left: 1em;
+}
+div.post span.date a {
+    color: black;
+    text-decoration: none;
+}
+div.post span.date a:hover {
+    text-decoration: underline;
+}
+
+div.post span.date span.year {}
+div.post span.date span.year:after { 
+    content: "/";
+}
+div.post span.date span.month {}
+div.post span.date span.month:after {
+    content: "/";
+}
+div.post span.date span.day {}
+
+div.post pre.content {}
+
+div.post ul.categories {}
+div.post ul.categories li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 1em;
+}
+div.post ul.categories li a {}
+
+div.post div#disqus_thread {}
+
+div.posts {}
+
+div.nav {
+    border-top: solid 1px;
+}
+div.nav ul {}
+div.nav ul li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 1em;
+}
+div.nav ul li.rss {
+    float: right;
+}
+div.nav ul li a {}
