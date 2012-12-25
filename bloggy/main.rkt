@@ -47,8 +47,6 @@
 (define-unit bloggy@
   (import bloggy-config^) (export bloggy^)
 
-  (when (directory-exists? output)
-    (delete-directory/files output))
   (make-directory* output)
 
   (define year-table (make-hash))
@@ -130,8 +128,8 @@
                            ,(format "var disqus_shortname = '~a';
 
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://~a/blog/~a/~a/~a/~a/';
-        var disqus_url = 'http://~a/posts/~a/~a/~a/~a';
+        var disqus_identifier = '~a/blog/~a/~a/~a/~a/';
+        var disqus_url = '~a/posts/~a/~a/~a/~a';
         var disqus_script = 'embed.js';
 
     (function () {
@@ -287,7 +285,7 @@
                    (post-data year month day filename
                               title categories content-f) pd)
                   (define this-url
-                    (format "http://~a/post/~a/~a/~a/~a"
+                    (format "~a/post/~a/~a/~a/~a"
                             *BLOG-URL*
                             year month day filename))
                   `(entry
@@ -323,6 +321,6 @@
     (index-page!)
     (atom!)
 
-    (copy-file style.css-path (build-path output "style.css"))))
+    (copy-file style.css-path (build-path output "style.css") #t)))
 
 (provide (all-defined-out))
