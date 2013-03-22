@@ -7,8 +7,8 @@
          racket/match
          racket/function
          racket/generator
-         xml
-         planet2/util)
+         pkg/util
+         xml)
 
 (define-signature bloggy-config^
   (output
@@ -278,7 +278,7 @@
               (link ([href ,*BLOG-URL*]))
               (updated ,(format "~a-~a-~aT00:00:00-00:00"
                                 last-year last-month last-day))
-              (id ,*BLOG-URL*)
+              (id ,(format "~a/" *BLOG-URL*))
               ,@(for/list ([pd (in-all-posts)]
                            [i (in-range *N*)])
                   (match-define
