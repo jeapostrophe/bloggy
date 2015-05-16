@@ -7,7 +7,6 @@
          racket/match
          racket/function
          racket/generator
-         pkg/util
          xml)
 
 (define-signature bloggy-config^
