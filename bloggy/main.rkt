@@ -2,6 +2,7 @@
 (require racket/unit
          racket/list
          racket/file
+         racket/path
          racket/system
          racket/runtime-path
          racket/match
@@ -37,11 +38,18 @@
      (apply table-snoc! next-table more)]))
 
 (struct post-data (year month day filename title categories content-f))
-(define (post-data-link pd)
+(define (post-data-link pd #:include-date? [include-date? #f])
   (match-define
    (post-data year month day filename title categories content-f) pd)
-  `(a ([href ,(format "/posts/~a/~a/~a/~a" year month day filename)])
-      ,title))
+  (define no-date
+    `(a ([href ,(format "/posts/~a/~a/~a/~a" year month day filename)])
+        ,title))
+  (cond
+    [include-date?
+     `(span ,(format "~a/~a/~a" year month day) nbsp
+            ,no-date)]
+    [else
+     no-date]))
 
 (define-unit bloggy@
   (import bloggy-config^) (export bloggy^)
@@ -208,16 +216,21 @@
            (λ ()
              `(ul
                ,@(for/list ([day (in-sorted-hash-keys day-table)])
+                   (define day-posts (hash-ref day-table day))
                    `(li (a ([href ,(format "/archive/~a/~a/~a/" year month day)])
-                           ,day)))))))
+                           ,day)
+                        ,(day-page-links day-posts)))))))
+
+  (define (day-page-links day-posts)    
+    `(ul
+      ,@(for/list ([post (in-list day-posts)])
+          `(li ,(post-data-link post)))))
 
   (define (day-page! year month day day-posts)
     (page! #:path (build-path "archive" year month day "index.html")
            #:title (format "~a > ~a > ~a" year month day)
            (λ ()
-             `(ul
-               ,@(for/list ([post (in-list day-posts)])
-                   `(li ,(post-data-link post)))))))
+             (day-page-links day-posts))))
 
   (define (categories-page!)
     (page! #:path (build-path "cat" "index.html")
@@ -235,7 +248,7 @@
            (λ ()
              `(ul
                ,@(for/list ([post (in-list cat-posts)])
-                   `(li ,(post-data-link post)))))))
+                   `(li ,(post-data-link post #:include-date? #t)))))))
 
   (define (in-sorted-hash-keys ht)
     (in-list (sort (hash-keys ht) string>?)))
