@@ -178,7 +178,12 @@
                  #:categories categories
                  content-f)
     (match-define (vector year month day) date)
-    (define path (build-path "posts" year month day filename))
+    (define path
+      (with-handlers ([exn:fail?
+                       (λ (x)
+                         (eprintf "p = ~v\n" (vector year month day filename))
+                         (raise x))])
+        (build-path "posts" year month day filename)))
     (define this-post-data
       (post-data year month day filename title categories content-f))
     (table-snoc! year-table year month day this-post-data)
